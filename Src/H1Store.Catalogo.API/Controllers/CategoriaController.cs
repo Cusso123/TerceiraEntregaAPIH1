@@ -2,10 +2,10 @@
 using H1Store.Catalogo.Application.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
-namespace H1Store.Catalogo.API.Controllers
+namespace H1Store.Catalogo.Api.Controllers
 {
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("api/categorias")]
     public class CategoriaController : ControllerBase
     {
         private readonly ICategoriaService _categoriaService;
@@ -18,7 +18,7 @@ namespace H1Store.Catalogo.API.Controllers
         [HttpGet]
         public async Task<IActionResult> ObterTodasCategorias()
         {
-            var categorias = await _categoriaService.ObterTodasCategorias();
+            var categorias =  _categoriaService.ObterTodasCategorias();
             return Ok(categorias);
         }
 
@@ -36,7 +36,7 @@ namespace H1Store.Catalogo.API.Controllers
         [HttpPost]
         public async Task<IActionResult> AdicionarCategoria(NovaCategoriaViewModel novaCategoria)
         {
-            await _categoriaService.AdicionarCategoria(novaCategoria);
+             _categoriaService.AdicionarCategoria(novaCategoria);
             return CreatedAtAction(nameof(ObterCategoriaPorCodigo), new { codigo = novaCategoria.Codigo }, novaCategoria);
         }
 
@@ -47,15 +47,16 @@ namespace H1Store.Catalogo.API.Controllers
             {
                 return BadRequest();
             }
-            await _categoriaService.AtualizarCategoria(categoria);
+             _categoriaService.AtualizarCategoria(categoria);
             return NoContent();
         }
 
         [HttpDelete("{codigo}")]
         public async Task<IActionResult> RemoverCategoria(int codigo)
         {
-            await _categoriaService.RemoverCategoria(codigo);
+             _categoriaService.RemoverCategoria(codigo);
             return NoContent();
         }
     }
 }
+

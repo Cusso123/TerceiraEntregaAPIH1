@@ -9,10 +9,10 @@ namespace H1Store.Catalogo.Domain.Interfaces
 {
     public interface IFornecedorRepository
     {
-        IEnumerable<Fornecedor> ObterTodos();
-        Categoria ObterPorCodigo(int codigo);
-        void Adicionar(Fornecedor fornecedor);
-        void Atualizar(Fornecedor fornecedor);
-        void Remover(int codigo);
+        IEnumerable<Fornecedor> ObterTodosFornecedor();
+        Task<Fornecedor> ObterFornecedorPorCodigo(int codigo);
+        void AdicionarFornecedor(Fornecedor fornecedor);
+        void AtualizarFornecedor(Fornecedor fornecedor);
+        void RemoverFornecedor(int codigo);
     }
 }

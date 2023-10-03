@@ -18,7 +18,7 @@ namespace H1Store.Catalogo.Data.Repository
             _fornecedorCaminhoArquivo = Path.Combine(Directory.GetCurrentDirectory(), "FileJsonData", "fornecedor.json");
         }
 
-        public async Task Adicionar(Fornecedor fornecedor)
+        public async Task AdicionarFornecedor(Fornecedor fornecedor)
         {
             var fornecedores = await LerFornecedoresDoArquivoAsync();
             int proximoCodigo = ObterProximoCodigoDisponivel(fornecedores);
@@ -27,7 +27,7 @@ namespace H1Store.Catalogo.Data.Repository
             await EscreverFornecedoresNoArquivoAsync(fornecedores);
         }
 
-        public async Task Atualizar(Fornecedor fornecedor)
+        public async Task AtualizarFornecedor(Fornecedor fornecedor)
         {
             var fornecedores = await LerFornecedoresDoArquivoAsync();
             var fornecedorExistente = fornecedores.FirstOrDefault(f => f.Codigo == fornecedor.Codigo);
@@ -42,18 +42,18 @@ namespace H1Store.Catalogo.Data.Repository
             await EscreverFornecedoresNoArquivoAsync(fornecedores);
         }
 
-        public async Task<IEnumerable<Fornecedor>> ObterTodos()
+        public async Task<IEnumerable<Fornecedor>> ObterTodosFornecedor()
         {
             return await LerFornecedoresDoArquivoAsync();
         }
 
-        public async Task<Fornecedor> ObterPorCodigo(int codigo)
+        public async Task<Fornecedor> ObterFornecedorPorCodigo(int codigo)
         {
             var fornecedores = await LerFornecedoresDoArquivoAsync();
             return fornecedores.FirstOrDefault(f => f.Codigo == codigo);
         }
 
-        public async Task Remover(int codigo)
+        public async Task RemoverFornecedor(int codigo)
         {
             var fornecedores = await LerFornecedoresDoArquivoAsync();
             var fornecedorExistente = fornecedores.FirstOrDefault(f => f.Codigo == codigo);
@@ -87,3 +87,4 @@ namespace H1Store.Catalogo.Data.Repository
         }
     }
 }
+

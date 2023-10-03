@@ -24,31 +24,31 @@ namespace H1Store.Catalogo.Application.Services
 
         public async Task<IEnumerable<CategoriaViewModel>> ObterTodasCategorias()
         {
-            var categorias = await _categoriaRepository.ObterTodos();
+            var categorias =  _categoriaRepository.ObterTodasCategorias();
             return _mapper.Map<IEnumerable<CategoriaViewModel>>(categorias);
         }
 
         public async Task<CategoriaViewModel> ObterCategoriaPorCodigo(int codigo)
         {
-            var categoria = await _categoriaRepository.ObterPorCodigo(codigo);
+            var categoria =  _categoriaRepository.ObterCategoriaPorCodigo(codigo);
             return _mapper.Map<CategoriaViewModel>(categoria);
         }
 
         public async Task AdicionarCategoria(NovaCategoriaViewModel novaCategoria)
         {
             var categoria = _mapper.Map<Categoria>(novaCategoria);
-            await _categoriaRepository.Adicionar(categoria);
+             _categoriaRepository.AdicionarCategoria(categoria);
         }
 
         public async Task AtualizarCategoria(CategoriaViewModel categoria)
         {
             var categoriaAtualizada = _mapper.Map<Categoria>(categoria);
-            await _categoriaRepository.Atualizar(categoriaAtualizada);
+             _categoriaRepository.AtualizarCategoria(categoriaAtualizada);
         }
 
         public async Task RemoverCategoria(int codigo)
         {
-            await _categoriaRepository.Remover(codigo);
+             _categoriaRepository.RemoverCategoria(codigo);
         }
     }
 }

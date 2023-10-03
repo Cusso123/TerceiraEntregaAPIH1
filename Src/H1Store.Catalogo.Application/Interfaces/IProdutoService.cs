@@ -9,12 +9,10 @@ namespace H1Store.Catalogo.Application.Interfaces
 {
 	public interface IProdutoService
 	{
-		IEnumerable<ProdutoViewModel> ObterTodos();
-		Task<ProdutoViewModel> ObterPorId(Guid id);
-		Task<IEnumerable<ProdutoViewModel>> ObterPorCategoria(int codigo);
-
-		void Adicionar(NovoProdutoViewModel produto);
-		void Atualizar(ProdutoViewModel produto);
-		void RemoverProduto(int id);
+		IEnumerable<ProdutoViewModel> ObterTodosProdutos();
+		Task<IEnumerable<ProdutoViewModel>> ObterProdutoPorCodigo(int codigo);
+		void AdicionarProduto(NovoProdutoViewModel produto);
+		void AtualizarProduto(ProdutoViewModel produto);
+		void RemoverProduto(int codigo);
 	}
 }

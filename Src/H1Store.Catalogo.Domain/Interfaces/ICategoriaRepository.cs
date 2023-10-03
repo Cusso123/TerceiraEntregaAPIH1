@@ -9,10 +9,10 @@ namespace H1Store.Catalogo.Domain.Interfaces
 {
     public interface ICategoriaRepository
     {
-        IEnumerable<Categoria> ObterTodos();
-        Categoria ObterPorCodigo(int codigo);
-        void Adicionar(Categoria categoria);
-        void Atualizar(Categoria categoria);
-        void Remover(int codigo);
+        IEnumerable<Categoria> ObterTodasCategorias();
+        Task<Categoria> ObterCategoriaPorCodigo(int codigo);
+        void AdicionarCategoria(Categoria categoria);
+        void AtualizarCategoria(Categoria categoria);
+        void RemoverCategoria(int codigo);
     }
 }

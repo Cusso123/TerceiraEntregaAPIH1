@@ -1,5 +1,6 @@
 ﻿using H1Store.Catalogo.Domain.Entities;
 using H1Store.Catalogo.Domain.Interfaces;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,47 +11,77 @@ namespace H1Store.Catalogo.Data.Repository
 {
     public class CategoriaRepository : ICategoriaRepository
     {
-        private readonly List<Categoria> _categorias; 
+        private readonly string _categoriaCaminhoArquivo;
 
         public CategoriaRepository()
         {
-            _categorias = new List<Categoria>();
+            _categoriaCaminhoArquivo = Path.Combine(Directory.GetCurrentDirectory(), "FileJsonData", "Categoria.json");
         }
 
-        public async Task<IEnumerable<Categoria>> ObterTodos()
+        public async Task<IEnumerable<Categoria>> ObterTodasCategorias()
         {
-            return await Task.FromResult(_categorias);
+            var categorias = await LerCategoriaDoArquivoAsync();
+            return categorias;
         }
 
-        public async Task<Categoria> ObterPorCodigo(int codigo)
+        public async Task<Categoria> ObterCategoriaPorCodigo(int codigo)
         {
-            return await Task.FromResult(_categorias.FirstOrDefault(c => c.Codigo == codigo));
+            var categorias = await LerCategoriaDoArquivoAsync();
+            return categorias.FirstOrDefault(c => c.Codigo == codigo);
         }
 
-        public async Task Adicionar(Categoria categoria)
+        public async Task AdicionarCategoria(Categoria categoria)
         {
-            _categorias.Add(categoria);
-            await Task.CompletedTask;
+            var categorias = await LerCategoriaDoArquivoAsync();
+            int proximoCodigo = ObterProximoCodigoDisponivel(categorias);
+            categoria.SetCodigo(proximoCodigo);
+            categorias.Add(categoria);
+            await EscreverCategoriaNoArquivoAsync(categorias);
         }
 
-        public async Task Atualizar(Categoria categoria)
+        public async Task AtualizarCategoria(Categoria categoria)
         {
-            var categoriaExistente = _categorias.FirstOrDefault(c => c.Codigo == categoria.Codigo);
+            var categorias = await LerCategoriaDoArquivoAsync();
+            var categoriaExistente = categorias.FirstOrDefault(c => c.Codigo == categoria.Codigo);
             if (categoriaExistente != null)
             {
                 categoriaExistente.Descricao = categoria.Descricao;
             }
-            await Task.CompletedTask;
+            await EscreverCategoriaNoArquivoAsync(categorias);
         }
 
-        public async Task Remover(int codigo)
+        public async Task RemoverCategoria(int codigo)
         {
-            var categoriaExistente = _categorias.FirstOrDefault(c => c.Codigo == codigo);
+            var categorias = await LerCategoriaDoArquivoAsync();
+            var categoriaExistente = categorias.FirstOrDefault(c => c.Codigo == codigo);
             if (categoriaExistente != null)
             {
-                _categorias.Remove(categoriaExistente);
+                categorias.Remove(categoriaExistente);
+                await EscreverCategoriaNoArquivoAsync(categorias);
             }
-            await Task.CompletedTask;
+        }
+
+        private async Task<List<Categoria>> LerCategoriaDoArquivoAsync()
+        {
+            if (!File.Exists(_categoriaCaminhoArquivo))
+                return new List<Categoria>();
+            string json = await File.ReadAllTextAsync(_categoriaCaminhoArquivo);
+            return JsonConvert.DeserializeObject<List<Categoria>>(json);
+        }
+
+        private int ObterProximoCodigoDisponivel(List<Categoria> categorias)
+        {
+            if (categorias.Any())
+                return categorias.Max(c => c.Codigo) + 1;
+            else
+                return 1;
+        }
+
+        private async Task EscreverCategoriaNoArquivoAsync(List<Categoria> categorias)
+        {
+            string json = JsonConvert.SerializeObject(categorias);
+            await File.WriteAllTextAsync(_categoriaCaminhoArquivo, json);
         }
     }
 }
+

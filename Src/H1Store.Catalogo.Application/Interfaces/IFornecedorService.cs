@@ -10,7 +10,7 @@ namespace H1Store.Catalogo.Application.Interfaces
     public interface IFornecedorService
     {
         IEnumerable<FornecedorViewModel> ObterTodosFornecedor();
-        FornecedorViewModel ObterFornecedorPorCodigo(int codigo);
+        Task<IEnumerable<FornecedorViewModel>> ObterFornecedorPorCodigo(int codigo);
         void AdicionarFornecedor(NovoFornecedorViewModel fornecedor);
         void AtualizarFornecedor(FornecedorViewModel fornecedor);
         void RemoverFornecedor(int codigo);

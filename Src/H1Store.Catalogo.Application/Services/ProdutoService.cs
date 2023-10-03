@@ -11,46 +11,44 @@ using System.Threading.Tasks;
 
 namespace H1Store.Catalogo.Application.Services
 {
-	public class ProdutoService : IProdutoService
-	{
-		#region - Construtores
-		private readonly IProdutoRepository _produtoRepository;
-		private IMapper _mapper;
+    public class ProdutoService : IProdutoService
+    {
+        private readonly IProdutoRepository _produtoRepository;
+        private IMapper _mapper;
 
-		public ProdutoService(IProdutoRepository produtoRepository, IMapper mapper)
-		{
-			_produtoRepository = produtoRepository;
-			_mapper = mapper;
-		}
-		#endregion
+        public ProdutoService(IProdutoRepository produtoRepository, IMapper mapper)
+        {
+            _produtoRepository = produtoRepository;
+            _mapper = mapper;
+        }
 
-		#region - Funções
-		public void Adicionar(NovoProdutoViewModel novoProdutoViewModel)
-		{
-			var novoProduto = _mapper.Map<Produto>(novoProdutoViewModel);
-			_produtoRepository.Adicionar(novoProduto);
+        public async Task AdicionarProduto(NovoProdutoViewModel novoProdutoViewModel)
+        {
+            var novoProduto = _mapper.Map<Produto>(novoProdutoViewModel);
+            _produtoRepository.AdicionarProduto(novoProduto);
+        }
 
-		}
+        public async Task AtualizarProduto(ProdutoViewModel produtoViewModel)
+        {
+            var produto = _mapper.Map<Produto>(produtoViewModel);
+            _produtoRepository.AtualizarProduto(produto);
+        }
 
-		public void Atualizar(ProdutoViewModel produto)
-		{
-			throw new NotImplementedException();
-		}
+        public async Task<IEnumerable<ProdutoViewModel>> ObterProdutoPorCodigo(int codigo)
+        {
+            var produtos = await _produtoRepository.ObterProdutoPorCodigo(codigo);
+            return _mapper.Map<IEnumerable<ProdutoViewModel>>(produtos);
+        }
 
-		public Task<IEnumerable<ProdutoViewModel>> ObterPorCategoria(int codigo)
-		{
-			throw new NotImplementedException();
-		}
+        public IEnumerable<ProdutoViewModel> ObterTodosProdutos()
+        {
+            var produtos = _produtoRepository.ObterTodosProdutos();
+            return _mapper.Map<IEnumerable<ProdutoViewModel>>(produtos);
+        }
 
-		public Task<ProdutoViewModel> ObterPorId(Guid id)
-		{
-			throw new NotImplementedException();
-		}
-
-		public IEnumerable<ProdutoViewModel> ObterTodos()
-		{
-			return _mapper.Map<IEnumerable<ProdutoViewModel>>(_produtoRepository.ObterTodos());
-		}
-		#endregion
-	}
+        public async Task RemoverProduto(int codigo)
+        {
+            _produtoRepository.RemoverProduto(codigo);
+        }
+    }
 }

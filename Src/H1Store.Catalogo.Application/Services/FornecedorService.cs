@@ -25,35 +25,30 @@ namespace H1Store.Catalogo.Application.Services
         public async Task AdicionarFornecedor(NovoFornecedorViewModel novoFornecedorViewModel)
         {
             var novoFornecedor = _mapper.Map<Fornecedor>(novoFornecedorViewModel);
-            await _fornecedorRepository.Adicionar(novoFornecedor);
+             _fornecedorRepository.AdicionarFornecedor(novoFornecedor);
         }
 
         public async Task AtualizarFornecedor(FornecedorViewModel fornecedorViewModel)
         {
             var fornecedor = _mapper.Map<Fornecedor>(fornecedorViewModel);
-            await _fornecedorRepository.Atualizar(fornecedor);
+             _fornecedorRepository.AtualizarFornecedor(fornecedor);
         }
 
         public async Task<FornecedorViewModel> ObterFornecedorPorCodigo(int codigo)
         {
-            var fornecedor = await _fornecedorRepository.ObterPorCodigo(codigo);
+            var fornecedor =  _fornecedorRepository.ObterFornecedorPorCodigo(codigo);
             return _mapper.Map<FornecedorViewModel>(fornecedor);
         }
 
         public IEnumerable<FornecedorViewModel> ObterTodosFornecedor()
         {
-            throw new NotImplementedException();
-        }
-
-        public async Task<IEnumerable<FornecedorViewModel>> ObterTodosFornecedores()
-        {
-            var fornecedores = await _fornecedorRepository.ObterTodos();
-            return _mapper.Map<IEnumerable<FornecedorViewModel>>(fornecedores);
+            var fornecedor = _fornecedorRepository.ObterTodosFornecedor();
+            return _mapper.Map<IEnumerable<FornecedorViewModel>>(fornecedor);
         }
 
         public async Task RemoverFornecedor(int codigo)
         {
-            await _fornecedorRepository.Remover(codigo);
+             _fornecedorRepository.RemoverFornecedor(codigo);
         }
     }
 }

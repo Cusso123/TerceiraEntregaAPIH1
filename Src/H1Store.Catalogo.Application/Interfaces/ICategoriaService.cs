@@ -10,7 +10,7 @@ namespace H1Store.Catalogo.Application.Interfaces
     public interface ICategoriaService
     {
         IEnumerable<CategoriaViewModel> ObterTodasCategorias();
-        CategoriaViewModel ObterCategoriaPorCodigo(int codigo);
+        Task<IEnumerable<CategoriaViewModel>> ObterCategoriaPorCodigo(int codigo);
         void AdicionarCategoria(NovaCategoriaViewModel categoria);
         void AtualizarCategoria(CategoriaViewModel categoria);
         void RemoverCategoria(int codigo);

@@ -24,5 +24,6 @@ namespace H1Store.Catalogo.Domain.Entities
         public bool Ativo { get; private set; }
         public DateTime DataCadastro { get; private set; }
         public string EmailContato { get; private set; }
+
     }
 }

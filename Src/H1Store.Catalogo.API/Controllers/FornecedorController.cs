@@ -3,10 +3,10 @@ using H1Store.Catalogo.Application.Interfaces;
 using H1Store.Catalogo.Application.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 
-namespace H1Store.Catalogo.API.Controllers
+namespace H1Store.Catalogo.Api.Controllers
 {
+    [Route("api/[controller]")]
     [ApiController]
-    [Route("api/fornecedores")]
     public class FornecedorController : ControllerBase
     {
         private readonly IFornecedorService _fornecedorService;
@@ -17,16 +17,16 @@ namespace H1Store.Catalogo.API.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ObterTodosFornecedores()
+        public async Task<IActionResult> ObterTodosFornecedor()
         {
-            var fornecedores = await _fornecedorService.ObterTodosFornecedores();
+            var fornecedores =  _fornecedorService.ObterTodosFornecedor();
             return Ok(fornecedores);
         }
 
         [HttpGet("{codigo}")]
         public async Task<IActionResult> ObterFornecedorPorCodigo(int codigo)
         {
-            var fornecedor = await _fornecedorService.ObterFornecedorPorCodigo(codigo);
+            var fornecedor =  _fornecedorService.ObterFornecedorPorCodigo(codigo);
             if (fornecedor == null)
             {
                 return NotFound();
@@ -37,7 +37,7 @@ namespace H1Store.Catalogo.API.Controllers
         [HttpPost]
         public async Task<IActionResult> AdicionarFornecedor(NovoFornecedorViewModel novoFornecedor)
         {
-            await _fornecedorService.AdicionarFornecedor(novoFornecedor);
+             _fornecedorService.AdicionarFornecedor(novoFornecedor);
             return CreatedAtAction(nameof(ObterFornecedorPorCodigo), new { codigo = novoFornecedor.Codigo }, novoFornecedor);
         }
 
@@ -48,15 +48,16 @@ namespace H1Store.Catalogo.API.Controllers
             {
                 return BadRequest();
             }
-            await _fornecedorService.AtualizarFornecedor(fornecedor);
+             _fornecedorService.AtualizarFornecedor(fornecedor);
             return NoContent();
         }
 
         [HttpDelete("{codigo}")]
         public async Task<IActionResult> RemoverFornecedor(int codigo)
         {
-            await _fornecedorService.RemoverFornecedor(codigo);
+             _fornecedorService.RemoverFornecedor(codigo);
             return NoContent();
         }
     }
 }
+
