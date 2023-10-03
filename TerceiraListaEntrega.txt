@@ -1,0 +1,30 @@
+Marcus Paulo Nascimento Costa	Sistemas de Informação	02/10/2023
+
+Terceira Lista de Entrega
+
+Questão 1: 
+Estava ferindo o princípio da responsabilidade única do SOLID, esse princípio afirma que uma classe deve ter apenas um motivo para mudar, ou seja deve ter uma única responsabilidade. 
+Para corrigir a situação precisamos adotar a separação de responsabilidades em diferentes camadas e classes.
+As regras de negócio foram movidas para a camada de domínio, as operações de persistência para a camada de dados e as validações e interações com a API para a camadas de aplicação, a API separada tambem. 
+Isso tudo nos permitiu melhorar a organização do codigo, facilitar a manutenção e tornar o sistema mais flexível para futuras mudanças.
+
+Questão 2: 
+A camada de domínio contém as entidades de negócio e as regras de domínio do sistema, nessa camada a gente define as classes que representam os objetos do mundo real e suas propriedades, essa camada é responsável por encapsular as regras de negócio especificas do domínio.
+A camada de dados trata da persistência dos dados, incluindo o acesso ao banco de dados ou qualquer outro mecanismo de armazenamento, nessa camada definimos classes de repositório para interagir com os dados armazenados. 
+A camada de aplicação contém a lógica da aplicação que coordena as operações entre a camada de domínio e a camada de dados. É nessa camada que implementamos os serviços, responsáveis por orquestrar as ações e regras de negócio que envolvem as entidades do domínio. 
+A camada de API lida com a comunicação entre o sistema e o mundo externo. Ela que fornece Endpoints para receber solicitações HTTP, processar essas solicitações e retornar respostas. É nessa camada que mapeamos as operações da camada de aplicação para URLs acessíveis via HTTP. 
+
+Questão 3: 
+Na camada de domínio criamos classes com propriedades de set privado para encapsular o estado dos objetos e seguir o princípio de encapsulamento. 
+A vantagem de usar esse formato é que ele permite controlar o acesso aos dados internos das classes, garantindo que as propriedades só possam ser modificadas de maneira controlada e segura, por meio de métodos públicos. 
+Desse jeito as propriedades só podem ser alteradas por métodos que aplicam validações ou regras de negócios, ajudando a manter a integridade dos dados e evita que valores inválidos sejam atribuídos as propriedades diretamente. 
+
+Questão 4: 
+A técnica de injeção de dependência melhora a modularidade, a testabilidade e a manutenção do codigo. A injeção de dependência envolve a passagem de objetos necessários para a classe em vez de a classe criar esses objetos internamente. 
+As principais vantagem da injeção de dependência são: 
+•	Desacoplamento: Permite que as classes dependam de abstrações em vez de implementações concretas, reduzindo o acoplamento entre componentes do sistema.
+•	Testabilidade: Facilita a criação de testes unitários, pois é mais fácil substituir as dependências reais por objetos de teste ou simulações.
+•	Flexibilidade: Permite alterar facilmente a implementação de uma dependência sem afetar a classe que a utiliza, facilitando a manutenção e a evolução do sistema.
+•	Reutilização: As classes podem ser reutilizadas em diferentes contextos, pois não estão rigidamente acopladas às suas dependências.
+No contexto da camada de Application, a injeção de dependência nos ajuda a integrar as classes de serviço com outras dependências, como repositórios de dados ou serviços externos, de forma flexível e controlada. 
+Isso torna o código mais modular e fácil de manter.
